@@ -58,12 +58,12 @@ namespace NaiadProba
 
 					visits = visits.PartitionBy(x => x.GetHashCode());
 
-					var todayCounts = visits
+					var todayCounts = visits//Synchronize(x => true)
 						.Select (x => int.Parse (x).PairWith (1))
-						.Aggregate (p => p.First, p => p.Second, (x, y) => x + y, (key, state) => key.PairWith(state));
+						.Aggregate (p => p.First, p => p.Second, (x, y) => x + y, (key, state) => key.PairWith(state));//.Synchronize(x => true)
 
-					var summed = todayCounts
-						.Join (yesterdayCounts, x => x.First, x => x.First, (x, y) => Math.Abs(x.Second - y.Second))
+					var summed = todayCounts//.Synchronize(x => true)
+						.Join (yesterdayCounts, x => x.First, x => x.First, (x, y) => Math.Abs(x.Second - y.Second))//.Synchronize(x => true)
 						.Aggregate<int, int, int, int, IterationIn<Epoch>>(x => 0, x => x, (x, y) => x + y, (key, state) => state, true);
 
 					lc.ExitLoop(summed).Subscribe(x =>
@@ -72,13 +72,17 @@ namespace NaiadProba
 								Console.WriteLine(line);
 						});
 
-					return todayCounts;
+					return todayCounts;//.Synchronize(x => true);
 				},
 					numDays - 1,
 					"ClickCount iteration");
 
 				computation.Activate();
 				computation.Join();
+
+				if (computation.Configuration.ProcessID == 0) {
+					Console.WriteLine ("Computation finished");
+				}
 			}
 		}
 	}
