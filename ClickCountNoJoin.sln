@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaiadProba", "NaiadProba\NaiadProba.csproj", "{040C0F08-94D3-4590-8BE7-434B79E90FC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickCountNoJoin", "NaiadProba\ClickCountNoJoin.csproj", "{040C0F08-94D3-4590-8BE7-434B79E90FC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

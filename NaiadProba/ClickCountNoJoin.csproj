@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{040C0F08-94D3-4590-8BE7-434B79E90FC2}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>NaiadProba</RootNamespace>
-    <AssemblyName>NaiadProba</AssemblyName>
+    <RootNamespace>ClickCountNoJoin</RootNamespace>
+    <AssemblyName>ClickCountNoJoin</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -32,13 +32,13 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Microsoft.Research.Naiad">
-      <HintPath>..\..\..\Naiad\Naiad\bin\Release\Microsoft.Research.Naiad.dll</HintPath>
+      <HintPath>..\..\..\..\Naiad\Naiad\bin\Release\Microsoft.Research.Naiad.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Research.Naiad.Lindi">
-      <HintPath>..\..\..\Naiad\Frameworks\Lindi\bin\Release\Microsoft.Research.Naiad.Lindi.dll</HintPath>
+      <HintPath>..\..\..\..\Naiad\Frameworks\Lindi\bin\Release\Microsoft.Research.Naiad.Lindi.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Research.Naiad.HdfsSupport">
-      <HintPath>..\..\..\Naiad\Frameworks\HdfsSupport\bin\x64\Release\Microsoft.Research.Naiad.HdfsSupport.dll</HintPath>
+      <HintPath>..\..\..\..\Naiad\Frameworks\HdfsSupport\bin\x64\Release\Microsoft.Research.Naiad.HdfsSupport.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

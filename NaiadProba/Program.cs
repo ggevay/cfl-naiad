@@ -11,7 +11,9 @@ using Microsoft.Research.Naiad.Frameworks.Lindi;
 using Microsoft.Research.Naiad.Frameworks.Hdfs;
 using Microsoft.Research.Naiad.Dataflow.PartitionBy;
 
-namespace NaiadProba
+// time mono NaiadClickCountNoJoin/NaiadProba/bin/Release/ClickCountNoJoin.exe /home/ggevay/ClickCountGenerated/100000000/in/clickLog_ 4
+
+namespace ClickCountNoJoin
 {
 	class MainClass
 	{
@@ -56,10 +58,10 @@ namespace NaiadProba
 
 
 
-					visits = visits.PartitionBy(x => x.GetHashCode());
+					visits = visits.PartitionBy(x => x);
 
 					var todayCounts = visits//Synchronize(x => true)
-						.Select (x => int.Parse (x).PairWith (1))
+						.Select (x => x.PairWith (1))
 						.Aggregate (p => p.First, p => p.Second, (x, y) => x + y, (key, state) => key.PairWith(state));//.Synchronize(x => true)
 
 					var summed = todayCounts//.Synchronize(x => true)
@@ -90,7 +92,7 @@ namespace NaiadProba
 
 	public static class ExtensionMethods
 	{
-		public static IEnumerable<string> ReadLinesOfText(this string filename)
+		public static IEnumerable<int> ReadLinesOfText(this string filename)
 		{
 			Console.WriteLine("Reading file {0}", filename);
 
@@ -99,7 +101,7 @@ namespace NaiadProba
 				//var file = File.OpenText(filename);
 				var file = new StreamReader(filename, Encoding.UTF8, true, 8*1024*1024);
 				while (!file.EndOfStream)
-					yield return file.ReadLine();
+					yield return int.Parse(file.ReadLine());
 			}
 			else
 				Console.WriteLine("File not found! {0}", filename);
