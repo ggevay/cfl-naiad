@@ -19,10 +19,12 @@ namespace ClickCountNoJoin
 	{
 		public static void Main (string[] args)
 		{
-			int numDays = int.Parse (args [1]);
-
 			using (var computation = NewComputation.FromArgs(ref args))
 			{
+				Console.WriteLine ("computation.Configuration.WorkerCount (--threads): " + computation.Configuration.WorkerCount);
+
+				int numDays = int.Parse (args [1]); // This has to be inside the using, because the FromArgs call removes the Naiad-specific arguments from args
+				Console.WriteLine ("numDays: " + numDays);
 
 				//Console.WriteLine ("computation.Configuration.ProcessID: " + computation.Configuration.ProcessID);
 
@@ -62,7 +64,9 @@ namespace ClickCountNoJoin
 
 					var todayCounts = visits//Synchronize(x => true)
 						.Select (x => x.PairWith (1))
-						.Aggregate (p => p.First, p => p.Second, (x, y) => x + y, (key, state) => key.PairWith(state));//.Synchronize(x => true)
+						.Aggregate (p => p.First, p => p.Second, (x, y) => x + y, (key, state) => key.PairWith(state));//.Synchronize(x => true);
+
+
 
 					var summed = todayCounts//.Synchronize(x => true)
 						.Join (yesterdayCounts, x => x.First, x => x.First, (x, y) => Math.Abs(x.Second - y.Second))//.Synchronize(x => true)
@@ -73,6 +77,7 @@ namespace ClickCountNoJoin
 							foreach (var line in x)
 								Console.WriteLine(line);
 						});
+
 
 					return todayCounts;//.Synchronize(x => true);
 				},
